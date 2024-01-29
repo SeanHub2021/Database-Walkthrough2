@@ -21,3 +21,12 @@ def add_category():
     return render_template("add_category.html") # by default the normal method is GET, so this behaves an ELSE condition since its not part of the POST block, so if not POST then = GET
 # when a user clicks the  add_category button, this will use the "GET" method and render the add_category template.
 # once they submit the form, this will call the SAME function, but will check if the request being made is a POST method.
+
+@app.route("/add_category/<int:category_id>", methods=["GET", "POST"])
+def edit_category(category_id):
+    category = Category.query.get_or_404(category_id)
+    if request.method == "POST":
+        category.category_name = request.form.get("category_name")
+        db.session.commit() #after that, we should commit the change from the session to the database
+        return redirect(url_for("categories"))
+    return render_template("edit_category.html", category=category)
