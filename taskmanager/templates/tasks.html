@@ -21,12 +21,16 @@
             {% if task.is_urgent == True %}
                 <i class="fas fa-exclamation-circle light-blue-text text-lighten-2"></i>
             {% endif %}
+        </div>
         <div class="collapsible-body">
-            <strong>{{ task.category}}</strong>
+            <strong>{{ task.category }}</strong>
             <p>{{ task.task_description }}</p>
+            <p>
+                <a href="{{ url_for('edit_task', task_id=task.id) }}" class="btn green accent-4">Edit</a>
+            </p>
         </div>
     </li>
     {% endfor %}
-</ul>
+</ul> 
 
 {% endblock %}
