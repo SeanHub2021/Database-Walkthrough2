@@ -32,7 +32,7 @@ def edit_category(category_id):
         return redirect(url_for("categories"))
     return render_template("edit_category.html", category=category)
 
-
+#Delete Category
 @app.route("/delete_category/<int:category_id>")
 def delete_category(category_id):
     category = Category.query.get_or_404(category_id)
@@ -71,3 +71,11 @@ def edit_task(task_id):
         task.category_id = request.form.get("category_id")
         db.session.commit()
     return render_template("edit_task.html", task=task, categories=categories)
+
+#delete a task
+@app.route("/delete_tasky/<int:task_id>") #when the function is called, it takes the task_id, 
+def delete_task(task_id):
+    task = Task.query.get_or_404(task_id) #then tries to query the database to find the task
+    db.session.delete(task) #it then removes the task, using .delete method
+    db.session.commit() # and commits the change to the database
+    return redirect(url_for("home")) #before redirecting users back to the homepage
